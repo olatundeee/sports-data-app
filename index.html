@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
+    <link rel="stylesheet" href="./style.css">
+    <title>View real time sports data</title>
+</head>
+<body>
+
+    <ul id="slide-out" class="sidenav collection"></ul>
+    <div class="row">
+        <div class="col l12 m12 sidenav-area black">
+            <a href="#" data-target="slide-out" class="sidenav-trigger white-text link-text"><b>All Sports</b></a>
+        </div>
+
+        <div class="col l12 m12 center container card leaguesTableCard">
+            <div class="card-content"></div>
+
+                <ul class="collapsible" id="leaguesTable"></ul>
+            </div>
+        </div>
+    </div>
+
+    <script src="./jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="./axios.js"></script>
+    <script src="./sports-data.js"></script>
+    <script>
+        function viewTeams() {
+            $('.league-name').click(function() {
+                const firstElPosition = $(this).text();
+
+                console.log(firstElPosition);
+            });
+        }
+    </script>
+</body>
+</html>
