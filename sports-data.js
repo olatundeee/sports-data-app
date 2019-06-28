@@ -3,6 +3,8 @@ $(document).ready(function(){
 
     $('.collapsible').collapsible();
 
+    $('.country_search_form_area').hide();
+
     // list all sports in the database
 
     axios.get('https://www.thesportsdb.com/api/v1/json/1/all_sports.php').then(response => {
@@ -13,7 +15,7 @@ $(document).ready(function(){
         responseArray.forEach(sport => {
             const sportName = sport.strSport
 
-            const collectionItem = `<li class="collection-item">${sportName}</li>`
+            const collectionItem = `<li class="collection-item all-sports-collection sidenav-close" onclick="viewSports()">${sportName}</li>`
 
             allSports = allSports + collectionItem;
         })
@@ -32,13 +34,13 @@ $(document).ready(function(){
 
         responseArray.forEach(league => {
             const leagueName = league.strLeague
-            const sport = league.strSport
-            const alternativeName = league.strLeagueAlternate
 
             const tableRow = `<li>
             <div class="collapsible-header league-name" onclick="viewTeams()">${leagueName}</div>
-            <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+            <div class="collapsible-body"><ul class="collection team-collection"></ul></div>
           </li>`
+
+          
 
             allLeagues = allLeagues + tableRow;
         })

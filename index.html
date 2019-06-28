@@ -15,6 +15,16 @@
     <div class="row">
         <div class="col l12 m12 sidenav-area black">
             <a href="#" data-target="slide-out" class="sidenav-trigger white-text link-text"><b>All Sports</b></a>
+            <a href="#" onclick="searchCountry()">Search Country</a>
+
+            <div class="row container center center-align country_search_form_area">
+                <div class="col l9 m9 center center-align">
+                    <input placeholder="Enter Country Name Here" id="country_name" type="text" class="center center-align black-text country_search_form white">
+                </div>
+                <div class="col l3 m3 center center-align">
+                    <span><a href="#" class="btn white black-text" onclick="searchForCountry()">search</a></span>
+                </div>
+            </div>
         </div>
 
         <div class="col l12 m12 center container card leaguesTableCard">
@@ -34,7 +44,88 @@
             $('.league-name').click(function() {
                 const firstElPosition = $(this).text();
 
-                console.log(firstElPosition);
+                const elText = firstElPosition.replace(/ /g, '%20');
+
+                axios.get(`https://www.thesportsdb.com/api/v1/json/1/search_all_teams.php?l=${elText}`).then(response => {
+                    const responseArray = response.data.teams;
+
+                    let allTeams = ``;
+
+                    responseArray.forEach(team => {
+                        const teamName = team.strTeam;
+
+                        const tableRow = `<li class="collection-item">${teamName}</li>`
+
+                        allTeams = allTeams + tableRow;
+                    })
+                    $('.team-collection').html(allTeams)
+
+                    
+                }).catch(err => {
+                    console.log(err)
+                })
+            });
+        }
+
+        function viewSports() {
+            $('.all-sports-collection').click(function() {
+                const sportName = $(this).text();
+                const sportNameSlug =  sportName.replace(/ /g, '%20');
+
+                axios.get(`https://www.thesportsdb.com/api/v1/json/1/search_all_leagues.php?s=${sportNameSlug}`).then(response => {
+                    const responseArray = response.data.countrys;
+
+                    let sportLeagues = ``;
+
+                    responseArray.forEach(league => {
+                        const leagueName = league.strLeague;
+
+                        const tableRow = `<li>
+                        <div class="collapsible-header league-name" onclick="viewTeams()">${leagueName}</div>
+                        <div class="collapsible-body"><ul class="collection team-collection"></ul></div>
+                        </li>`
+
+                        sportLeagues = sportLeagues + tableRow
+                    })
+
+                    document.getElementById('leaguesTable').innerHTML = sportLeagues;
+
+
+                }).catch(err => {
+                    console.log(err)
+                });
+            })
+        }
+
+        function searchCountry() {
+            $('.country_search_form_area').show();
+        }
+
+        function searchForCountry() {
+            const searchData = $('.country_search_form').val();
+
+            axios.get(`https://www.thesportsdb.com/api/v1/json/1/search_all_leagues.php?c=${searchData}`).then(response => {
+                const responseArray = response.data.countrys;
+
+                let countryLeagues = ``;
+
+                responseArray.forEach(league => {
+                    const leagueName = league.strLeague;
+
+                    const leagueSport = league.strSport;
+
+                    const tableRow = `<li>
+                        <div class="collapsible-header league-name" onclick="viewTeams()">${leagueName}(${leagueSport})</div>
+                        <div class="collapsible-body"><ul class="collection team-collection"></ul></div>
+                        </li>`
+
+                        countryLeagues = countryLeagues + tableRow
+                })
+                document.getElementById('leaguesTable').innerHTML = countryLeagues;
+
+                $('.country_search_form_area').hide();
+            }).catch(err => {
+                console.log(err);
             });
         }
     </script>

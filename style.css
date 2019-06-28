@@ -1,6 +1,5 @@
 .sidenav-area {
     width: 100%;
-    height: 50px;
     padding: 3% !important;
 }
 
@@ -11,4 +10,14 @@
 .leaguesTableCard {
     margin: 2% !important;
     padding: 2%;
+}
+
+.all-sports-collection {
+    cursor: pointer;
+}
+
+.country_search_form_area {
+    margin: 5% 10%;
+    padding-left: 5%;
+    width: 100%;
 }
